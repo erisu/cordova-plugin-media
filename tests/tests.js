@@ -434,7 +434,7 @@ exports.defineAutoTests = function () {
                     // CB-10535: Play after a few secs, to give allow enough buffering of media file before seeking
                     setTimeout(function () {
                         media.play();
-                    }, 4000);
+                    }, 16000);
                 },
                 ACTUAL_PLAYBACK_TEST_TIMEOUT
             );
