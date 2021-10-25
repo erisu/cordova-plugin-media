@@ -26,4 +26,10 @@
     <license>Apache 2.0</license>
     <js-module src="tests.js" name="tests">
     </js-module>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <preference name="MediaTypesRequiringUserActionForPlayback" value="none" />
+        </config-file>
+    </platform>
 </plugin>
