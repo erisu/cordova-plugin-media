@@ -411,19 +411,23 @@ exports.defineAutoTests = function () {
                     var context = this;
                     var mediaFile = WEB_MP3_FILE;
                     var successCallback = function () {};
+
+
+
                     var statusChange = function (statusCode) {
-                        if (!context.done && statusCode === Media.MEDIA_RUNNING) {
-                            checkInterval = setInterval(function () {
-                                if (context.done) return;
-                                media.seekTo(5000);
-                                media.getCurrentPosition(function (position) {
-                                    expect(position).toBeCloseTo(5, 0);
-                                    context.done = true;
-                                    done();
-                                }, failed.bind(null, done, 'media1.getCurrentPosition - Error getting media current position', context));
-                            }, 1000);
+                        if (context.done) return;
+
+                        if (statusCode === Media.MEDIA_RUNNING) {
+                            media.seekTo(5000);
+
+                            media.getCurrentPosition(function (position) {
+                                expect(position).toBeCloseTo(5, 0);
+                                context.done = true;
+                                done();
+                            }, failed.bind(null, done, 'media1.getCurrentPosition - Error getting media current position', context));
                         }
                     };
+
                     media = new Media(
                         mediaFile,
                         successCallback,
