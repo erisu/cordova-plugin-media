@@ -23,7 +23,7 @@
 
 // increased timeout for actual playback to give device chance to download and play mp3 file
 // some emulators can be REALLY slow at this, so two minutes
-var ACTUAL_PLAYBACK_TEST_TIMEOUT = 2 * 60 * 1000;
+var ACTUAL_PLAYBACK_TEST_TIMEOUT = 3 * 60 * 1000;
 
 var WEB_MP3_FILE = 'https://cordova.apache.org/static/downloads/BlueZedEx.mp3';
 var WEB_MP3_STREAM = 'https://cordova.apache.org/static/downloads/BlueZedEx.mp3';
@@ -489,7 +489,7 @@ exports.defineAutoTests = function () {
                             failed.bind(null, done, 'media1.getCurrentPosition - Error getting media current position'),
                             context
                         );
-                    }, 4000);
+                    }, 5000);
                 }
             };
 
