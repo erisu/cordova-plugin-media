@@ -24,7 +24,6 @@
 // increased timeout for actual playback to give device chance to download and play mp3 file
 // some emulators can be REALLY slow at this, so two minutes
 var ACTUAL_PLAYBACK_TEST_TIMEOUT = 2 * 60 * 1000;
-jasmine.DEFAULT_TIMEOUT_INTERVAL = ACTUAL_PLAYBACK_TEST_TIMEOUT;
 
 var WEB_MP3_FILE = 'https://cordova.apache.org/static/downloads/BlueZedEx.mp3';
 var WEB_MP3_STREAM = 'https://cordova.apache.org/static/downloads/BlueZedEx.mp3';
@@ -67,6 +66,9 @@ exports.defineAutoTests = function () {
     };
 
     describe('Media', function () {
+        beforeAll(function() {
+            jasmine.DEFAULT_TIMEOUT_INTERVAL = ACTUAL_PLAYBACK_TEST_TIMEOUT;
+        });
         beforeEach(function () {
             // Custom Matcher
             jasmine.Expectation.addMatchers({
