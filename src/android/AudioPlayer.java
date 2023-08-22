@@ -97,18 +97,24 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
     private int seekOnPrepared = 0;     // seek to this location once media is prepared
     private float setRateOnPrepared = -1;
 
+    private JSONObject audioSettings;
+
+    public static final String AUDIO_SETTINGS_RECORD_BITRATE = "AudioSettingsRecordBitRate";
+    public static final String AUDIO_SETTINGS_RECORD_SAMPLING_RATE = "AudioSettingsRecordSamplingRate";
+
     /**
      * Constructor.
      *
      * @param handler           The audio handler object
      * @param id                The id of this audio player
      */
-    public AudioPlayer(AudioHandler handler, String id, String file) {
+    public AudioPlayer(AudioHandler handler, String id, String file, JSONObject audioSettings) {
         this.handler = handler;
         context = handler.getApplicationContext();
         this.id = id;
         this.audioFile = file;
         this.tempFiles = new LinkedList<String>();
+        this.audioSettings = audioSettings;
 
     }
 
@@ -170,6 +176,14 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
             this.recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             this.recorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS); // RAW_AMR);
             this.recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC); //AMR_NB);
+
+            try {
+                this.recorder.setAudioEncodingBitRate(audioSettings.getInt(AUDIO_SETTINGS_RECORD_BITRATE));
+                this.recorder.setAudioSamplingRate(audioSettings.getInt(AUDIO_SETTINGS_RECORD_SAMPLING_RATE));
+            } catch (JSONException e) {
+                // should not reach here
+            }
+
             this.tempFile = createAudioFilePath(null);
             this.recorder.setOutputFile(this.tempFile);
             try {

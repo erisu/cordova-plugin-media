@@ -60,6 +60,9 @@
         <source-file src="src/android/AudioHandler.java" target-dir="src/org/apache/cordova/media" />
         <source-file src="src/android/AudioPlayer.java" target-dir="src/org/apache/cordova/media" />
         <source-file src="src/android/FileHelper.java" target-dir="src/org/apache/cordova/media" />
+
+        <preference name="AudioSettingsRecordBitRate" value="96000" />
+        <preference name="AudioSettingsRecordSamplingRate" value="44100" />
     </platform>
 
     <!-- ios -->

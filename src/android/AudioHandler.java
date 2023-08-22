@@ -18,6 +18,9 @@
 */
 package org.apache.cordova.media;
 
+import static org.apache.cordova.media.AudioPlayer.AUDIO_SETTINGS_RECORD_BITRATE;
+import static org.apache.cordova.media.AudioPlayer.AUDIO_SETTINGS_RECORD_SAMPLING_RATE;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaResourceApi;
@@ -262,7 +265,19 @@ public class AudioHandler extends CordovaPlugin {
             if (players.isEmpty()) {
                 onFirstPlayerCreated();
             }
-            ret = new AudioPlayer(this, id, file);
+
+            int bitRate = preferences.getInteger(AUDIO_SETTINGS_RECORD_BITRATE, 96000);
+            int sampleRate = preferences.getInteger(AUDIO_SETTINGS_RECORD_SAMPLING_RATE, 44100);
+
+            JSONObject audioSettings = new JSONObject();
+            try {
+                audioSettings.put(AUDIO_SETTINGS_RECORD_BITRATE, bitRate);
+                audioSettings.put(AUDIO_SETTINGS_RECORD_SAMPLING_RATE, sampleRate);
+            } catch (JSONException e) {
+                // should not reach here
+            }
+
+            ret = new AudioPlayer(this, id, file, audioSettings);
             players.put(id, ret);
         }
         return ret;
